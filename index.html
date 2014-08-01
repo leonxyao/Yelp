@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- Meta -->
+    <title>Yelp</title>
+    <meta charset="utf-8" />
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/normalize.css" />
+    <link rel="stylesheet" href="css/style.css" />
+
+    <!-- Fonts -->
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Raleway|Josefin+Sans:400,700" />
+  </head>
+
+  <body>
+    <header>
+      <h1><a href="/">Callback Yelp</a></h1>
+    </header>
+
+    <!-- Active entry -->
+    <div id="entry"></div>
+
+    <!-- Handlebars templates --> 
+    <script type="text/x-handlebars-template" id="entry-template">
+      <div class="map"></div>
+
+      <div class="feature">
+        Welcome to<br />
+        {{#if editing}}
+          <input type="text" name="name" value="{{ activeEntryData.name }}" />
+        {{else}}
+          {{#if creating}}
+            <input type="text" name="name" />
+          {{else}}
+            <span>{{ activeEntryData.name }}</span>
+          {{/if}}
+        {{/if}}
+
+        {{#if viewing}}
+          <div class="dropdown">
+            <button>&#x25BE;</button>
+
+            <select>
+              <option value="-1">Pick location...</option>
+
+              {{#each entries}}
+                <option value="{{ id }}">{{ name }}</option>
+              {{/each}}
+            </select>
+          </div>
+        {{/if}}
+
+        <br />
+        <div class="actions">
+          {{#if editing}}
+            <button class="teal update">Update</button>
+          {{else}}
+            {{#if creating}}
+              <button class="green add">Add</button>
+            {{else}}
+              <button class="green new">New</button>
+              <button class="teal edit">Edit</button>
+              <button class="red delete">Delete</button>
+            {{/if}}
+          {{/if}}
+
+          <!-- Error message -->
+          <div class="error"></div>
+        </div>
+      </div>
+
+      <div class="metadata">
+        <div class="address">
+          Address:<br />
+
+          {{#if editing}}
+            <input type="text" name="address" value="{{ activeEntryData.address }}" />
+          {{else}}
+            {{#if creating}}
+              <input type="text" name="address" />
+            {{else}}
+              <span>{{ activeEntryData.address }}</span>
+            {{/if}}
+          {{/if}}
+        </div>
+
+        <div class="description">
+          Description:<br />
+
+          {{#if editing}}
+            <textarea name="description">{{ activeEntryData.description }}</textarea>
+          {{else}}
+            {{#if creating}}
+              <textarea name="description"></textarea>
+            {{else}}
+              <span>{{ activeEntryData.description }}</span>
+            {{/if}}
+          {{/if}}
+        </div>
+      </div>
+
+      {{#if activeEntryData}}
+        <input class="id" type="hidden" value="{{ activeEntryData.id }}" />
+      {{/if}}
+    </script> 
+
+    <!-- Libraries -->
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script type="text/javascript" src="js/handlebars.js"></script>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB4NQtL9PBc0KOeCIY2n5rD0N4El6k09zw&sensor=false"></script>
+
+    <!-- Utilities -->
+    <script type="text/javascript" src="js/util.js"></script>
+
+    <!-- Models -->
+    <script type="text/javascript" src="js/entry-model.js"></script>
+
+    <!-- Views -->
+    <script type="text/javascript" src="js/main-view.js"></script>
+    <script type="text/javascript" src="js/entry-view.js"></script>
+    <script type="text/javascript" src="js/editing-entry-view.js"></script>
+    <script type="text/javascript" src="js/creating-entry-view.js"></script>
+    <script type="text/javascript" src="js/google-map-view.js"></script>
+
+    <!-- Main -->
+    <script type="text/javascript" src="js/main.js"></script>
+  </body>
+</html>
